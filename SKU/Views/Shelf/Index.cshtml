@@ -1,0 +1,58 @@
+﻿@using SKU.Model;
+@model List<Cabinet>
+
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml"; // Specify the layout file
+}
+
+<div class="container">
+    @foreach (var cabinet in Model)
+    {
+        <div>
+            <h2>Cabinet Number: @cabinet.Number</h2>
+            <p>Position: (@cabinet.Position.X, @cabinet.Position.Y, @cabinet.Position.Z)</p>
+            <p>Size: (Width: @cabinet.Size.Width, Depth: @cabinet.Size.Depth, Height: @cabinet.Size.Height)</p>
+            <div class="row">
+                @foreach (var row in cabinet.Rows)
+                {                   
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+
+                        <div class="box-part text-center">
+
+                            <i class="fa fa-instagram fa-3x" aria-hidden="true"></i>
+
+                            <div class="title">
+                                <h4>Instagram</h4>
+                            </div>
+
+                            <div class="text">
+                                <span>Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.</span>
+                            </div>
+                            <h3>Row Number: @row.Number</h3>
+                            <p>Position Z: @row.PositionZ</p>
+                            <p>Row Size: Height: @row.Size.Height</p>
+                            <div>
+                                @foreach (var lane in row.Lanes)
+                                {
+                                    <div>
+                                        <p>Lane Number: @lane.Number</p>
+                                        <p>JanCode: @lane.JanCode</p>
+                                        <p>Quantity: @lane.Quantity</p>
+                                        <p>Position X: @lane.PositionX</p>
+                                    </div>
+                                }
+                            </div>
+
+                            <a href="#">Learn More</a>
+
+                        </div>
+                    </div>
+
+
+
+                }
+            </div>
+        </div>
+    }
+</div>
