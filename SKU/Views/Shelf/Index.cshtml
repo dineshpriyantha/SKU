@@ -16,41 +16,37 @@
             <div class="row">
                 @foreach (var row in cabinet.Rows)
                 {                   
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-
-                        <div class="box-part text-center">
-
-                            <i class="fa fa-instagram fa-3x" aria-hidden="true"></i>
-
-                            <div class="title">
-                                <h4>Instagram</h4>
-                            </div>
-
-                            <div class="text">
-                                <span>Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.</span>
-                            </div>
-                            <h3>Row Number: @row.Number</h3>
-                            <p>Position Z: @row.PositionZ</p>
-                            <p>Row Size: Height: @row.Size.Height</p>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="box-part text-left">
+                            <h5>Row Number: @row.Number</h5>
+                            <h5>Position Z: @row.PositionZ</h5>
+                            <h5>Row Size: Height: @row.Size.Height</h5>
                             <div>
-                                @foreach (var lane in row.Lanes)
-                                {
-                                    <div>
-                                        <p>Lane Number: @lane.Number</p>
-                                        <p>JanCode: @lane.JanCode</p>
-                                        <p>Quantity: @lane.Quantity</p>
-                                        <p>Position X: @lane.PositionX</p>
-                                    </div>
-                                }
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Lane Number</th>
+                                            <th>JanCode</th>
+                                            <th>Quantity</th>
+                                            <th>Position X</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var lane in row.Lanes)
+                                        {
+                                            <tr>
+                                                <td>@lane.Number</td>
+                                                <td>@lane.JanCode</td>
+                                                <td>@lane.Quantity</td>
+                                                <td>@lane.PositionX</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
-
-                            <a href="#">Learn More</a>
 
                         </div>
                     </div>
-
-
-
                 }
             </div>
         </div>
