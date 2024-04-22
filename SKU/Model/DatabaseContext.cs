@@ -3,19 +3,16 @@ using System.Collections.Generic;
 
 namespace SKU.Model
 {
-    public interface IDatabaseContext
-    {
-        DbSet<Cabinet> Cabinets { get; set; }
-        DbSet<Sku> Skus { get; set; }
-        Task<int> SaveChangesAsync();
-    }
-
-    public class DatabaseContext : DbContext, IDatabaseContext
-    {
+       public class DatabaseContext : DbContext
+        {
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
 
         public DbSet<Cabinet> Cabinets { get; set; }
         public DbSet<Sku> Skus { get; set; }
+        public DbSet<Row> Rows { get; set; }
+        public DbSet<Lane> Lanes { get; set; }
+        public DbSet<Position> Positions { get; set; }
+        public DbSet<Size> Sizes { get; set; }
 
         public Task<int> SaveChangesAsync()
         {

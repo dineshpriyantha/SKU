@@ -10,18 +10,28 @@ namespace SKU.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ShelfController : ControllerBase
+    public class ShelfApiController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
+        public ShelfApiController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         [HttpGet("GetCabinets")]
         // Action method to get cabinet data
         public ActionResult GetCabinets()
         {
             // Read JSON data
-            string jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "App_Data", "shelf.json");
+            string jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), 
+                                               _configuration.GetSection("AppSettings")["App_Data"], 
+                                               _configuration.GetSection("AppSettings")["jsonFile"]);
             var cabinets = ReadCabinetData(jsonFilePath);
 
             // Read CSV data
-            string csvFilePath = Path.Combine(Directory.GetCurrentDirectory(), "App_Data", "sku.csv");
+            string csvFilePath = Path.Combine(Directory.GetCurrentDirectory(),
+                                              _configuration.GetSection("AppSettings")["App_Data"], 
+                                              _configuration.GetSection("AppSettings")["csvFile"]);
             var skus = ReadSkuData(csvFilePath);
 
             // Match SKUs with lanes in each cabinet

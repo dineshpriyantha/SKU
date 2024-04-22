@@ -4,6 +4,6 @@ namespace SKU.Services
 {
     public interface IShelfManager
     {
-        Task<List<LaneWithSkuViewModel>> GetShelfCabinets();
+        Task<List<Cabinet>> GetShelfCabinets();
     }
 }

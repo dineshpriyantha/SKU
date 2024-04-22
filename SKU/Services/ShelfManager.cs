@@ -28,21 +28,21 @@ namespace SKU.Services
             }
         }
 
-        public async Task<List<LaneWithSkuViewModel>> GetShelfCabinets()
+        public async Task<List<Cabinet>> GetShelfCabinets()
         {
             using (var client = GetHttpClient())
             {
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync("Shelf/GetCabinets");
+                    HttpResponseMessage response = await client.GetAsync("ShelfApi/GetCabinets");
                     if(response.IsSuccessStatusCode)
                     {
-                        var cabinets = response.Content.ReadAsAsync<List<LaneWithSkuViewModel>>().Result;
+                        var cabinets = response.Content.ReadAsAsync<List<Cabinet>>().Result;
                         return cabinets;
                     }
                     else
                     {
-                        return new List<LaneWithSkuViewModel>();
+                        return new List<Cabinet>();
                     }
                 }
                 catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
