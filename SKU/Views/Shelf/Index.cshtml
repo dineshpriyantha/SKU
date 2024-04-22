@@ -1,4 +1,4 @@
-﻿@using SKU.Model;
+﻿@*@using SKU.Model;
 @model List<Cabinet>
 
 @{
@@ -10,7 +10,7 @@
     @foreach (var cabinet in Model)
     {
         <div>
-            <h2>Cabinet Number: @cabinet.Number</h2>
+            <h2 class="alert alert-primary">Cabinet Number: @cabinet.Number</h2>
             <p>Position: (@cabinet.Position.X, @cabinet.Position.Y, @cabinet.Position.Z)</p>
             <p>Size: (Width: @cabinet.Size.Width, Depth: @cabinet.Size.Depth, Height: @cabinet.Size.Height)</p>
             <div class="row">
@@ -49,6 +49,112 @@
                     </div>
                 }
             </div>
+        </div>
+    }
+</div>*@
+
+@*
+@using SKU.Model;
+@model List<Cabinet>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Specify the layout file
+}
+
+<div class="container">
+    @foreach (var cabinet in Model)
+    {
+        <div>
+            <h2 class="alert alert-primary">Cabinet Number: @cabinet.Number</h2>
+            <p>Position: (@cabinet.Position.X, @cabinet.Position.Y, @cabinet.Position.Z)</p>
+            <p>Size: (Width: @cabinet.Size.Width, Depth: @cabinet.Size.Depth, Height: @cabinet.Size.Height)</p>
+            @foreach (var row in cabinet.Rows.OrderBy(r => r.Number)) // Order rows by number
+            {
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="box-part text-left">
+                            <h5>Row Number: @row.Number</h5>
+                            <h5>Position Z: @row.PositionZ</h5>
+                            <h5>Row Size: Height: @row.Size.Height</h5>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Lane Number</th>
+                                        <th>JanCode</th>
+                                        <th>Quantity</th>
+                                        <th>Position X</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var lane in row.Lanes.OrderBy(l => l.Number)) // Order lanes by number
+                                    {
+                                        <tr>
+                                            <td>@lane.Number</td>
+                                            <td>@lane.JanCode</td>
+                                            <td>@lane.Quantity</td>
+                                            <td>@lane.PositionX</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>*@
+
+
+@using SKU.Model;
+@model List<Cabinet>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Specify the layout file
+}
+
+<div class="container">
+    @foreach (var cabinet in Model.OrderBy(c => c.Position.Z)) // Order cabinets by Position.Z
+    {
+        <div>
+            <h2 class="alert alert-primary">Cabinet Number: @cabinet.Number</h2>
+            <p>Position: (@cabinet.Position.X, @cabinet.Position.Y, @cabinet.Position.Z)</p>
+            <p>Size: (Width: @cabinet.Size.Width, Depth: @cabinet.Size.Depth, Height: @cabinet.Size.Height)</p>
+            @foreach (var row in cabinet.Rows.OrderBy(r => r.Number)) // Order rows by Number
+            {
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="box-part text-left">
+                            <h5>Row Number: @row.Number</h5>
+                            <h5>Position Z: @row.PositionZ</h5>
+                            <h5>Row Size: Height: @row.Size.Height</h5>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Lane Number</th>
+                                        <th>JanCode</th>
+                                        <th>Quantity</th>
+                                        <th>Position X</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var lane in row.Lanes.OrderBy(l => l.Number)) // Order lanes by number
+                                    {
+                                        <tr>
+                                            <td>@lane.Number</td>
+                                            <td>@lane.JanCode</td>
+                                            <td>@lane.Quantity</td>
+                                            <td>@lane.PositionX</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     }
 </div>

@@ -4,6 +4,7 @@ using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Newtonsoft.Json;
+using SKU.Mapping;
 
 namespace SKU.API
 {
@@ -24,7 +25,7 @@ namespace SKU.API
             var skus = ReadSkuData(csvFilePath);
 
             // Match SKUs with lanes in each cabinet
-            MatchSkusWithLanes(cabinets, skus);
+            List<LaneWithSkuViewModel> skuViewmodel = MatchSkusWithLanes(cabinets, skus);
 
             // Return cabinets as JSON
             return new JsonResult(cabinets);
@@ -60,7 +61,7 @@ namespace SKU.API
                 // Log the error, return an empty list, or throw an exception as needed
             }
             return cabinets;
-        }      
+        }
 
         private List<Sku> ReadSkuData(string csvFilePath)
         {
@@ -70,6 +71,7 @@ namespace SKU.API
                 using (var reader = new StreamReader(csvFilePath))
                 using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
                 {
+                    csv.Context.RegisterClassMap<SkuMap>();
                     skus = csv.GetRecords<Sku>().ToList();
                 }
             }
@@ -81,22 +83,40 @@ namespace SKU.API
             return skus;
         }
 
-        private void MatchSkusWithLanes(List<Cabinet> cabinets, List<Sku> skus)
+        private List<LaneWithSkuViewModel> MatchSkusWithLanes(List<Cabinet> cabinets, List<Sku> skus)
         {
+            List<LaneWithSkuViewModel> lanesWithSkus = new List<LaneWithSkuViewModel>();
+
             foreach (var cabinet in cabinets)
             {
                 foreach (var row in cabinet.Rows)
                 {
                     foreach (var lane in row.Lanes)
                     {
-                        // Find the corresponding SKU based on the janCode
+                        // Find the corresponding SKU based on the JanCode
                         var matchingSku = skus.FirstOrDefault(sku => sku.JanCode == lane.JanCode);
 
                         if (matchingSku != null)
                         {
-                            // Update the lane with SKU details
-                            lane.JanCode = matchingSku.JanCode;
-                            // Add any other properties you want to update
+                            // Create a new LaneWithSkuViewModel and populate its properties
+                            var laneWithSku = new LaneWithSkuViewModel
+                            {
+                                CabinetNumber = cabinet.Number,
+                                RowNumber = row.Number,
+                                PositionZ = row.PositionZ,
+                                LaneNumber = lane.Number,
+                                JanCode = lane.JanCode,
+                                Quantity = lane.Quantity,
+                                PositionX = lane.PositionX,
+                                Name = matchingSku.Name,
+                                X = matchingSku.X,
+                                Y = matchingSku.Y,
+                                Z = matchingSku.Z,
+                                ImageURL = matchingSku.ImageURL
+                            };
+
+                            // Add the LaneWithSkuViewModel to the list
+                            lanesWithSkus.Add(laneWithSku);
                         }
                         else
                         {
@@ -106,7 +126,8 @@ namespace SKU.API
                     }
                 }
             }
-        }
 
+            return lanesWithSkus;
+        }
     }
 }

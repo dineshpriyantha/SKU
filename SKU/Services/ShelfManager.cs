@@ -28,7 +28,7 @@ namespace SKU.Services
             }
         }
 
-        public async Task<List<Cabinet>> GetShelfCabinets()
+        public async Task<List<LaneWithSkuViewModel>> GetShelfCabinets()
         {
             using (var client = GetHttpClient())
             {
@@ -37,12 +37,12 @@ namespace SKU.Services
                     HttpResponseMessage response = await client.GetAsync("Shelf/GetCabinets");
                     if(response.IsSuccessStatusCode)
                     {
-                        var cabinets = response.Content.ReadAsAsync<List<Cabinet>>().Result;
+                        var cabinets = response.Content.ReadAsAsync<List<LaneWithSkuViewModel>>().Result;
                         return cabinets;
                     }
                     else
                     {
-                        return new List<Cabinet>();
+                        return new List<LaneWithSkuViewModel>();
                     }
                 }
                 catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
