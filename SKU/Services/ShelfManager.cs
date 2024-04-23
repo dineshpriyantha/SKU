@@ -6,6 +6,7 @@ namespace SKU.Services
     public class ShelfManager : IShelfManager
     {
         private readonly IConfiguration _configuration;
+        //private readonly IHttpClient _httpClient;
         public ShelfManager(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -35,7 +36,7 @@ namespace SKU.Services
                 try
                 {
                     HttpResponseMessage response = await client.GetAsync("ShelfApi/GetCabinets");
-                    if(response.IsSuccessStatusCode)
+                    if (response.IsSuccessStatusCode)
                     {
                         var cabinets = response.Content.ReadAsAsync<List<Cabinet>>().Result;
                         return cabinets;

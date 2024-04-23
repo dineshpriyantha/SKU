@@ -7,12 +7,10 @@ namespace SKU.Controllers
     public class ShelfController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly IShelfManager _shelfManager;
 
-        public ShelfController(IConfiguration configuration, IShelfManager shelfManager)
+        public ShelfController(IConfiguration configuration)
         {
             _configuration = configuration;
-            _shelfManager = shelfManager;
         }
         public IActionResult Index()
         {
