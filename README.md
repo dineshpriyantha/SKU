@@ -79,3 +79,14 @@ This repository contains a system for managing SKU (Stock Keeping Unit) data. Th
 1. Clone the repository to your local machine.
 2. Configure the application settings, such as API URLs and file paths, in the `appsettings.json` file.
 3. Build and run the application.
+
+# System Requirements
+
+## Software Requirements:
+- **Operating System:** Windows 10 or later, macOS 10.15 or later, Linux distributions supported by .NET 6.
+- **.NET SDK:** .NET 6 SDK installed on the development machine.
+- **Integrated Development Environment (IDE):** Visual Studio 2022, Visual Studio Code, or any other IDE/editor compatible with .NET 6 development.
+
+## Additional Dependencies:
+- **NuGet Packages:**
+ 1. Newtonsoft
